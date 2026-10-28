@@ -42,6 +42,18 @@ public class JogoForca {
         this.palavraAtual = palavraAtual;
     }
 
+    public EstadoJogo getEstadoJogo() {
+        return this.estadoJogo;
+    }
+
+    public Palavra getPalavraAtual() {
+        return this.palavraAtual;
+    }
+
+    public Set<Character> getLetras() {
+        return this.letras;
+    }
+
     public void iniciarJogo() {
         this.estadoJogo = EstadoJogo.JOGANDO;
         Palavra palavraSorteada = banco.sortearPalavra();

@@ -34,7 +34,7 @@ public class Palavra {
         return tema;
     }
 
-    public Set<Integer> getIndicesRevelados() {
+    private Set<Integer> getIndicesRevelados() {
         return indicesRevelados;
     }
 
@@ -61,6 +61,17 @@ public class Palavra {
         for(int i = 0; i < palavraAtual.length(); i++) {
             if (String.valueOf(palavraAtual.charAt(i)).equals(letraDigitada)) {
                 this.indicesRevelados.add(i);
+            }
+        }
+    }
+
+    public String getDisplay() {
+        StringBuilder sb = new StringBuilder();
+        String palavraAtual = getPalavra();
+
+        for(int i = 0; i < getPalavra().length(); i++) {
+            if (this.indicesRevelados.contains() ){
+                sb.append(palavraAtual.charAt(i))
             }
         }
     }

@@ -1,0 +1,119 @@
+package model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class JogoForca {
+
+    private BancoDePalavras banco;
+    private Palavra palavraAtual;
+    private int maxVida;
+    private int vidaAtual;
+    private int fase;
+    private Set<Character> letras;
+    private EstadoJogo estadoJogo;
+
+    public JogoForca(BancoDePalavras banco) {
+        this.banco = banco;
+        this.maxVida = 6;
+        this.fase = 1;
+        this.letras = new HashSet<>();
+        this.vidaAtual = maxVida;
+        this.estadoJogo = EstadoJogo.MENU;
+    }
+
+    public int getMaxVida() {
+        return this.maxVida;
+    }
+
+    public int getVidaAtual() {
+        return this.vidaAtual;
+    }
+
+    public int getFase() {
+        return this.fase;
+    }
+
+    public int getErros() {
+        return getMaxVida() - getVidaAtual();
+    }
+
+    private void setPalavraAtual(Palavra palavraAtual) {
+        this.palavraAtual = palavraAtual;
+    }
+
+    public void iniciarJogo() {
+        this.estadoJogo = EstadoJogo.JOGANDO;
+        Palavra palavraSorteada = banco.sortearPalavra();
+        setPalavraAtual(palavraSorteada);
+    }
+
+    public ResultadoPalpite enviarPalpite(char letra) {
+        if (letras.contains(letra)) {
+            return ResultadoPalpite.LETRA_JA_USADA;
+        }
+
+        this.letras.add(letra);
+        String letraDigitada = Character.toString(letra);
+
+        boolean letraExiste = this.palavraAtual.letraExiste(letraDigitada);
+
+        if (!letraExiste) {
+            return errouChecaVida();
+        }
+
+        return acertouChecaCondicao(letraDigitada);
+    }
+
+    public void proximaRodada() {
+        this.fase += 1;
+        if (this.fase == 10) {
+            this.vidaAtual = Math.min(getVidaAtual() + 2, getMaxVida());
+        }
+        this.letras.clear();
+        this.estadoJogo = EstadoJogo.JOGANDO;
+
+        Palavra proximaPalavra = this.banco.sortearPalavra();
+        setPalavraAtual(proximaPalavra);
+    }
+
+    public void resetar() {
+        this.fase = 1;
+        this.letras.clear();
+        this.palavraAtual = null;
+        this.banco.resetar();
+        this.vidaAtual = getMaxVida();
+        this.estadoJogo = EstadoJogo.MENU;
+    }
+
+    private ResultadoPalpite acertouChecaCondicao(String letra) {
+        this.palavraAtual.revelar(letra);
+
+        boolean venceu = this.palavraAtual.venceu();
+        boolean temMaisLetras = this.banco.aindaTemPalavra();
+
+        if (venceu && temMaisLetras) {
+            this.estadoJogo = EstadoJogo.VENCEU_RODADA;
+            return ResultadoPalpite.VENCEU_A_RODADA;
+        }
+
+        if (venceu) {
+            this.estadoJogo = EstadoJogo.VENCEU_JOGO;
+            return ResultadoPalpite.VENCEU_O_JOGO;
+        }
+
+        return ResultadoPalpite.ACERTOU_UMA_LETRA;
+    }
+
+    private ResultadoPalpite errouChecaVida() {
+        this.vidaAtual -= 1;
+
+        if (getErros() >= getMaxVida()) {
+            this.estadoJogo = EstadoJogo.PERDEU;
+
+            return ResultadoPalpite.PERDEU;
+        }
+
+        return ResultadoPalpite.ERROU_UMA_LETRA;
+    }
+}

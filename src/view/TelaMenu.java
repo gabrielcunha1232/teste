@@ -8,14 +8,20 @@ public class TelaMenu extends JPanel {
     private JButton jogar;
     private JButton historico;
     private JButton config;
+    private JanelaPrincipal janelaPrincipal;
 
-    public TelaMenu() {
+    public TelaMenu(JanelaPrincipal janelaPrincipal) {
+        this.janelaPrincipal = janelaPrincipal;
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.jogar = new JButton();
         jogar.setText("JOGAR");
         jogar.setAlignmentX(CENTER_ALIGNMENT);
         jogar.setMaximumSize(new Dimension(100, 40));
+        jogar.addActionListener(e -> {
+            janelaPrincipal.mostrarTela("JOGO");
+        });
 
         this.historico = new JButton();
         historico.setText("HISTORICO");

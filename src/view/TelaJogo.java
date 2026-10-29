@@ -98,6 +98,7 @@ public class TelaJogo extends JPanel {
         this.setTema("");
         this.setLetrasUsadas(new HashSet<>());
 
+        JOptionPane.showMessageDialog(this, "VOCÊ " + vitoriaOuDerrota);
         this.janelaPrincipal.mostrarTela("MENU");
     }
 

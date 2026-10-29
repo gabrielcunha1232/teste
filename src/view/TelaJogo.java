@@ -93,16 +93,8 @@ public class TelaJogo extends JPanel {
         jogoController.enviarPalpite(letra.toUpperCase());
     }
 
-    public void perdeuVoltaMenu() {
-        this.setDisplayText("PERDEU");
-        this.setTema("");
-        this.setLetrasUsadas(new HashSet<>());
-
-        this.janelaPrincipal.mostrarTela("MENU");
-    }
-
-    public void venceuVoltaMenu(){
-        this.setDisplayText("VENCEU");
+    public void venceuOuPerdeuMenu(String vitoriaOuDerrota) {
+        this.setDisplayText(vitoriaOuDerrota);
         this.setTema("");
         this.setLetrasUsadas(new HashSet<>());
 

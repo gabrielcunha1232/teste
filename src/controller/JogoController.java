@@ -4,7 +4,6 @@ import model.JogoForca;
 import model.ResultadoPalpite;
 import view.TelaJogo;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class JogoController {
@@ -26,7 +25,7 @@ public class JogoController {
         ResultadoPalpite resultadoPalpite = this.jogoForca.enviarPalpite(letra.charAt(0));
 
         switch (resultadoPalpite) {
-            case VENCEU_O_JOGO -> {this.telaJogo.venceuVoltaMenu();}
+            case VENCEU_O_JOGO -> {this.telaJogo.venceuOuPerdeuMenu("GANHOU");}
             case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
             case PERDEU -> {perdeuDerrota();}
             default -> atualizarDadosJogo();
@@ -35,7 +34,7 @@ public class JogoController {
 
     private void perdeuDerrota() {
         jogoForca.resetar();
-        this.telaJogo.perdeuVoltaMenu();
+        this.telaJogo.venceuOuPerdeuMenu("PERDEU");
     }
 
     public void atualizarDadosJogo() {

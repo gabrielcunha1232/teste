@@ -26,7 +26,7 @@ public class JogoController {
         ResultadoPalpite resultadoPalpite = this.jogoForca.enviarPalpite(letra.charAt(0));
 
         switch (resultadoPalpite) {
-            case VENCEU_O_JOGO -> {}
+            case VENCEU_O_JOGO -> {this.telaJogo.venceuVoltaMenu();}
             case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
             case PERDEU -> {perdeuDerrota();}
             default -> atualizarDadosJogo();

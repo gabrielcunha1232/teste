@@ -101,4 +101,12 @@ public class TelaJogo extends JPanel {
         this.janelaPrincipal.mostrarTela("MENU");
     }
 
+    public void venceuVoltaMenu(){
+        this.setDisplayText("VENCEU");
+        this.setTema("");
+        this.setLetrasUsadas(new HashSet<>());
+
+        this.janelaPrincipal.mostrarTela("MENU");
+    }
+
 }

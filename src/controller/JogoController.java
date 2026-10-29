@@ -1,7 +1,11 @@
 package controller;
 
 import model.JogoForca;
+import model.ResultadoPalpite;
 import view.TelaJogo;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class JogoController {
 
@@ -15,5 +19,31 @@ public class JogoController {
 
     public void iniciarJogo() {
         jogoForca.iniciarJogo();
+        atualizarDadosJogo();
+    }
+
+    public void enviarPalpite(String letra) {
+        ResultadoPalpite resultadoPalpite = this.jogoForca.enviarPalpite(letra.charAt(0));
+
+        switch (resultadoPalpite) {
+            case VENCEU_O_JOGO -> {}
+            case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
+            case PERDEU -> {perdeuDerrota();}
+            default -> atualizarDadosJogo();
+        }
+    }
+
+    private void perdeuDerrota() {
+        jogoForca.resetar();
+        this.telaJogo.perdeuVoltaMenu();
+    }
+
+    public void atualizarDadosJogo() {
+        this.telaJogo.setDisplayText(this.jogoForca.getPalavraAtual().getDisplay());
+        this.telaJogo.setTema(this.jogoForca.getPalavraAtual().getTema());
+
+        Set<Character> letras = this.jogoForca.getLetras();
+
+        this.telaJogo.setLetrasUsadas(letras);
     }
 }

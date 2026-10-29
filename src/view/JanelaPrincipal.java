@@ -22,7 +22,6 @@ public class JanelaPrincipal extends JFrame {
         this.add(painelPrincipal);
     }
 
-
     public void mostrarTela(String nome) {
         this.cardLayout.show(painelPrincipal, nome);
     }

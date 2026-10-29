@@ -35,6 +35,7 @@ public class App {
 
         TelaJogo telaJogo = new TelaJogo(janelaPrincipal);
         JogoController jogoController = new JogoController(jogoForca,  telaJogo);
+        telaJogo.setJogoController(jogoController);
 
         TelaMenu telaMenu = new TelaMenu(janelaPrincipal, jogoController);
 

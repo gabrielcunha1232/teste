@@ -4,6 +4,7 @@ import model.JogoForca;
 import model.Palavra;
 import service.LeitorDeArquivoPalavras;
 import view.JanelaPrincipal;
+import view.PainelForca;
 import view.TelaJogo;
 import view.TelaMenu;
 
@@ -30,10 +31,11 @@ public class App {
 
     private static JanelaPrincipal getJanelaPrincipal(BancoDePalavras bancoDePalavras) {
         JogoForca jogoForca = new JogoForca(bancoDePalavras);
+        PainelForca painelForca = new PainelForca();
 
         JanelaPrincipal janelaPrincipal = new JanelaPrincipal("Jogo da Forca");
 
-        TelaJogo telaJogo = new TelaJogo(janelaPrincipal);
+        TelaJogo telaJogo = new TelaJogo(janelaPrincipal, painelForca);
         JogoController jogoController = new JogoController(jogoForca,  telaJogo);
         telaJogo.setJogoController(jogoController);
 

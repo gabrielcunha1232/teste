@@ -11,6 +11,7 @@ public class TelaJogo extends JPanel {
 
     private JanelaPrincipal janelaPrincipal;
     private JogoController jogoController;
+    private PainelForca painelForca;
 
     private JLabel tema;
     private JLabel display;
@@ -18,8 +19,9 @@ public class TelaJogo extends JPanel {
     private JTextField letraDigitada;
     private JButton confirmarPalpite;
 
-    public TelaJogo(JanelaPrincipal janelaPrincipal) {
+    public TelaJogo(JanelaPrincipal janelaPrincipal, PainelForca painelForca) {
         this.janelaPrincipal = janelaPrincipal;
+        this.painelForca = painelForca;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20,20));
@@ -66,6 +68,9 @@ public class TelaJogo extends JPanel {
 
         this.add(this.tema);
         this.add(Box.createRigidArea(new Dimension(0, 30)));
+        this.painelForca.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(painelForca);
+        this.add(Box.createRigidArea(new Dimension(0, 20)));
         this.add(this.display);
         this.add(Box.createRigidArea(new Dimension(0, 30)));
         this.add(this.letrasUsadas);
@@ -79,6 +84,10 @@ public class TelaJogo extends JPanel {
 
     public void setTema(String tema) {
         this.tema.setText(tema);
+    }
+
+    public void setErros(int erros) {
+        this.painelForca.setErros(erros);
     }
 
     public void setDisplayText(String display) {

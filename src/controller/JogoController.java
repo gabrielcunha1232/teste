@@ -40,6 +40,7 @@ public class JogoController {
     public void atualizarDadosJogo() {
         this.telaJogo.setDisplayText(this.jogoForca.getPalavraAtual().getDisplay());
         this.telaJogo.setTema(this.jogoForca.getPalavraAtual().getTema());
+        this.telaJogo.setErros(this.jogoForca.getErros());
 
         Set<Character> letras = this.jogoForca.getLetras();
 

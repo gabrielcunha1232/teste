@@ -1,5 +1,7 @@
 package view;
 
+import controller.JogoController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +12,7 @@ public class TelaMenu extends JPanel {
     private JButton config;
     private JanelaPrincipal janelaPrincipal;
 
-    public TelaMenu(JanelaPrincipal janelaPrincipal) {
+    public TelaMenu(JanelaPrincipal janelaPrincipal, JogoController jogoController) {
         this.janelaPrincipal = janelaPrincipal;
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -20,6 +22,7 @@ public class TelaMenu extends JPanel {
         jogar.setAlignmentX(CENTER_ALIGNMENT);
         jogar.setMaximumSize(new Dimension(100, 40));
         jogar.addActionListener(e -> {
+            jogoController.iniciarJogo();
             janelaPrincipal.mostrarTela("JOGO");
         });
 

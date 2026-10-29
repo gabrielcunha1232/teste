@@ -1,22 +1,47 @@
+import controller.JogoController;
+import model.BancoDePalavras;
+import model.JogoForca;
+import model.Palavra;
+import service.LeitorDeArquivoPalavras;
 import view.JanelaPrincipal;
 import view.TelaJogo;
 import view.TelaMenu;
 
 import javax.swing.*;
+import java.io.IOException;
+import java.util.List;
+
 
 public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JanelaPrincipal janelaPrincipal = new JanelaPrincipal("Jogo da Forca");
-            TelaMenu telaMenu = new TelaMenu(janelaPrincipal);
-            TelaJogo telaJogo = new TelaJogo(janelaPrincipal);
+            List<Palavra> listaBanco = null;
+            try {
+                listaBanco = LeitorDeArquivoPalavras.ler("src/files/jogoforca.txt");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-            janelaPrincipal.adicionarTela(telaMenu, "MENU");
-            janelaPrincipal.adicionarTela(telaJogo, "JOGO");
-
-            janelaPrincipal.mostrarTela("MENU");
-
+            BancoDePalavras bancoDePalavras = new BancoDePalavras(listaBanco);
+            JanelaPrincipal janelaPrincipal = getJanelaPrincipal(bancoDePalavras);
             janelaPrincipal.setVisible(true);
         });
+    }
+
+    private static JanelaPrincipal getJanelaPrincipal(BancoDePalavras bancoDePalavras) {
+        JogoForca jogoForca = new JogoForca(bancoDePalavras);
+
+        JanelaPrincipal janelaPrincipal = new JanelaPrincipal("Jogo da Forca");
+
+        TelaJogo telaJogo = new TelaJogo(janelaPrincipal);
+        JogoController jogoController = new JogoController(jogoForca,  telaJogo);
+
+        TelaMenu telaMenu = new TelaMenu(janelaPrincipal, jogoController);
+
+        janelaPrincipal.adicionarTela(telaMenu, "MENU");
+        janelaPrincipal.adicionarTela(telaJogo, "JOGO");
+
+        janelaPrincipal.mostrarTela("MENU");
+        return janelaPrincipal;
     }
 }

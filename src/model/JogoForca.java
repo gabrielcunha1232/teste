@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,7 +52,7 @@ public class JogoForca {
     }
 
     public Set<Character> getLetras() {
-        return this.letras;
+        return Collections.unmodifiableSet(this.letras);
     }
 
     public void iniciarJogo() {
@@ -61,12 +62,14 @@ public class JogoForca {
     }
 
     public ResultadoPalpite enviarPalpite(char letra) {
-        if (letras.contains(letra)) {
+        char letraEmMaisculo = Character.toUpperCase(letra);
+
+        if (letras.contains(letraEmMaisculo)) {
             return ResultadoPalpite.LETRA_JA_USADA;
         }
 
-        this.letras.add(letra);
-        String letraDigitada = Character.toString(letra);
+        this.letras.add(letraEmMaisculo);
+        String letraDigitada = Character.toString(letraEmMaisculo);
 
         boolean letraExiste = this.palavraAtual.letraExiste(letraDigitada);
 

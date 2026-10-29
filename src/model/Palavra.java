@@ -69,10 +69,18 @@ public class Palavra {
         StringBuilder sb = new StringBuilder();
         String palavraAtual = getPalavra();
 
-        for(int i = 0; i < getPalavra().length(); i++) {
-            if (this.indicesRevelados.contains() ){
-                sb.append(palavraAtual.charAt(i))
+        for(int i = 0; i < palavraAtual.length(); i++) {
+            if (!sb.isEmpty()) {
+                sb.append(" ");
+            }
+
+            if (this.indicesRevelados.contains(i)) {
+                sb.append(palavraAtual.charAt(i));
+            } else {
+                sb.append("_");
             }
         }
+
+        return sb.toString();
     }
 }

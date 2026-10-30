@@ -33,6 +33,7 @@ public class TelaJogo extends JPanel {
         this.tema.setFont(new Font("Arial", Font.BOLD, 16));
         this.tema.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // fase
         this.fase = new JLabel("FASE: ");
         this.fase.setFont(new Font("Arial", Font.BOLD, 14));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -80,6 +81,7 @@ public class TelaJogo extends JPanel {
         painelDeEntrada.add(ajuda);
 
         this.add(this.tema);
+        this.add(this.fase);
         this.add(Box.createRigidArea(new Dimension(0, 30)));
         this.painelForca.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(painelForca);
@@ -105,6 +107,10 @@ public class TelaJogo extends JPanel {
 
     public void setDisplayText(String display) {
         this.display.setText(display);
+    }
+
+    public void setFaseDisplay(int fase) {
+        this.fase.setText(String.valueOf(fase));
     }
 
     public void setLetrasUsadas(Set<Character> letrasUsadas) {

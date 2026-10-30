@@ -19,6 +19,7 @@ public class JogoController {
     public void iniciarJogo() {
         jogoForca.iniciarJogo();
         jogoForca.setarDadosDeAjuda();
+        setFase();
         atualizarDadosJogo();
     }
 
@@ -34,12 +35,19 @@ public class JogoController {
             case VENCEU_O_JOGO -> {this.telaJogo.venceuOuPerdeuMenu("GANHOU", this.jogoForca.getPalavraAtual().getPalavra());}
             case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
             case PERDEU -> {perdeuDerrota();}
-            default -> atualizarDadosJogo();
+            default -> {
+                atualizarDadosJogo(); setFase();
+            }
         }
+    }
+
+    public void setFase() {
+        this.telaJogo.setFaseDisplay(this.jogoForca.getFase());
     }
 
     private void perdeuDerrota() {
         this.telaJogo.venceuOuPerdeuMenu("PERDEU", this.jogoForca.getPalavraAtual().getPalavra());
+        setFase();
         jogoForca.resetar();
     }
 

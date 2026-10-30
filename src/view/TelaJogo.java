@@ -14,10 +14,12 @@ public class TelaJogo extends JPanel {
     private PainelForca painelForca;
 
     private JLabel tema;
+    private JLabel fase;
     private JLabel display;
     private JLabel letrasUsadas;
     private JTextField letraDigitada;
     private JButton confirmarPalpite;
+    private JButton ajuda;
 
     public TelaJogo(JanelaPrincipal janelaPrincipal, PainelForca painelForca) {
         this.janelaPrincipal = janelaPrincipal;
@@ -31,6 +33,10 @@ public class TelaJogo extends JPanel {
         this.tema.setFont(new Font("Arial", Font.BOLD, 16));
         this.tema.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        this.fase = new JLabel("FASE: ");
+        this.fase.setFont(new Font("Arial", Font.BOLD, 14));
+        this.setAlignmentX(Component.LEFT_ALIGNMENT);
+
         // display
         this.display = new JLabel();
         this.display.setFont(new Font("Monospaced", Font.BOLD, 32));
@@ -40,6 +46,12 @@ public class TelaJogo extends JPanel {
         this.letrasUsadas = new JLabel();
         this.letrasUsadas.setFont(new Font("Monospaced", Font.PLAIN, 14));
         this.letrasUsadas.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // ajuda
+        this.ajuda = new JButton("PEDIR AJUDA");
+        this.ajuda.addActionListener(e -> {
+            enviarAjuda();
+        });
 
         // painel de entrada do palpite
         JPanel painelDeEntrada = new JPanel(new FlowLayout());
@@ -65,6 +77,7 @@ public class TelaJogo extends JPanel {
         painelDeEntrada.add(digite);
         painelDeEntrada.add(letraDigitada);
         painelDeEntrada.add(confirmarPalpite);
+        painelDeEntrada.add(ajuda);
 
         this.add(this.tema);
         this.add(Box.createRigidArea(new Dimension(0, 30)));
@@ -102,9 +115,13 @@ public class TelaJogo extends JPanel {
         jogoController.enviarPalpite(letra.toUpperCase());
     }
 
-    public void venceuOuPerdeuMenu(String vitoriaOuDerrota) {
+    private void enviarAjuda() {
+       this.jogoController.enviarAjuda();
+    }
+
+    public void venceuOuPerdeuMenu(String vitoriaOuDerrota, String palavraExata) {
         this.setDisplayText(vitoriaOuDerrota);
-        this.setTema("");
+        this.setTema(palavraExata);
         this.setLetrasUsadas(new HashSet<>());
 
         JOptionPane.showMessageDialog(this, "VOCÊ " + vitoriaOuDerrota);

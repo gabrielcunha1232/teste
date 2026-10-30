@@ -18,6 +18,12 @@ public class JogoController {
 
     public void iniciarJogo() {
         jogoForca.iniciarJogo();
+        jogoForca.setarDadosDeAjuda();
+        atualizarDadosJogo();
+    }
+
+    public void enviarAjuda() {
+        jogoForca.ajudaRevelandoLetra();
         atualizarDadosJogo();
     }
 
@@ -25,7 +31,7 @@ public class JogoController {
         ResultadoPalpite resultadoPalpite = this.jogoForca.enviarPalpite(letra.charAt(0));
 
         switch (resultadoPalpite) {
-            case VENCEU_O_JOGO -> {this.telaJogo.venceuOuPerdeuMenu("GANHOU");}
+            case VENCEU_O_JOGO -> {this.telaJogo.venceuOuPerdeuMenu("GANHOU", this.jogoForca.getPalavraAtual().getPalavra());}
             case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
             case PERDEU -> {perdeuDerrota();}
             default -> atualizarDadosJogo();
@@ -33,9 +39,10 @@ public class JogoController {
     }
 
     private void perdeuDerrota() {
+        this.telaJogo.venceuOuPerdeuMenu("PERDEU", this.jogoForca.getPalavraAtual().getPalavra());
         jogoForca.resetar();
-        this.telaJogo.venceuOuPerdeuMenu("PERDEU");
     }
+
 
     public void atualizarDadosJogo() {
         this.telaJogo.setDisplayText(this.jogoForca.getPalavraAtual().getDisplay());

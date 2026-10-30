@@ -2,6 +2,7 @@ package model;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 public class JogoForca {
@@ -11,8 +12,11 @@ public class JogoForca {
     private int maxVida;
     private int vidaAtual;
     private int fase;
+    private int qtdAjudaNaFase;
+    private int maxQtdAjuda;
     private Set<Character> letras;
     private EstadoJogo estadoJogo;
+    private Random random = new Random();
 
     public JogoForca(BancoDePalavras banco) {
         this.banco = banco;
@@ -82,6 +86,7 @@ public class JogoForca {
 
     public void proximaRodada() {
         this.fase += 1;
+        this.qtdAjudaNaFase = 0;
         if (this.fase == 10) {
             this.vidaAtual = Math.min(getVidaAtual() + 2, getMaxVida());
         }
@@ -90,15 +95,49 @@ public class JogoForca {
 
         Palavra proximaPalavra = this.banco.sortearPalavra();
         setPalavraAtual(proximaPalavra);
+        setarDadosDeAjuda();
     }
 
     public void resetar() {
         this.fase = 1;
+        this.qtdAjudaNaFase = 0;
         this.letras.clear();
         this.palavraAtual = null;
         this.banco.resetar();
         this.vidaAtual = getMaxVida();
         this.estadoJogo = EstadoJogo.MENU;
+    }
+
+    public void setarDadosDeAjuda() {
+        int tamanhoPalavraAtual = this.palavraAtual.getPalavra().length();
+
+        if (tamanhoPalavraAtual > 7) {
+            this.maxQtdAjuda = 3;
+        } else {
+            this.maxQtdAjuda = 1;
+        }
+    }
+
+    public void ajudaRevelandoLetra() {
+        if (this.qtdAjudaNaFase >= maxQtdAjuda) {
+            return;
+        }
+
+        String palavra = this.palavraAtual.getPalavra();
+        int totalLetras = palavra.length();
+
+
+        int idxToReveal;
+        char letraSorteada;
+
+        do {
+            idxToReveal = random.nextInt(totalLetras);
+            letraSorteada = palavra.charAt(idxToReveal);
+        } while (this.letras.contains(letraSorteada));
+
+        this.palavraAtual.revelar(Character.toString(letraSorteada));
+        this.letras.add(letraSorteada);
+        this.qtdAjudaNaFase++;
     }
 
     private ResultadoPalpite acertouChecaCondicao(String letra) {

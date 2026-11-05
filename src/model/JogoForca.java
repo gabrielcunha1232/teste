@@ -118,9 +118,9 @@ public class JogoForca {
         }
     }
 
-    public void ajudaRevelandoLetra() {
+    public ResultadoPalpite ajudaRevelandoLetra() {
         if (this.qtdAjudaNaFase >= maxQtdAjuda) {
-            return;
+            return ResultadoPalpite.DUPLICATA_DE_AJUDA;
         }
 
         String palavra = this.palavraAtual.getPalavra();
@@ -135,9 +135,11 @@ public class JogoForca {
             letraSorteada = palavra.charAt(idxToReveal);
         } while (this.letras.contains(letraSorteada));
 
-        this.palavraAtual.revelar(Character.toString(letraSorteada));
+        ResultadoPalpite resultadoPalpite = this.enviarPalpite(letraSorteada);
         this.letras.add(letraSorteada);
         this.qtdAjudaNaFase++;
+
+        return resultadoPalpite;
     }
 
     private ResultadoPalpite acertouChecaCondicao(String letra) {

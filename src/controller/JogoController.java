@@ -24,21 +24,15 @@ public class JogoController {
     }
 
     public void enviarAjuda() {
-        jogoForca.ajudaRevelandoLetra();
+        ResultadoPalpite resultadoPalpite = jogoForca.ajudaRevelandoLetra();
         atualizarDadosJogo();
+        switchQueVerificaCondicaoDoJogo(resultadoPalpite);
     }
 
     public void enviarPalpite(String letra) {
         ResultadoPalpite resultadoPalpite = this.jogoForca.enviarPalpite(letra.charAt(0));
 
-        switch (resultadoPalpite) {
-            case VENCEU_O_JOGO -> {this.telaJogo.venceuOuPerdeuMenu("GANHOU", this.jogoForca.getPalavraAtual().getPalavra());}
-            case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
-            case PERDEU -> {perdeuDerrota();}
-            default -> {
-                atualizarDadosJogo(); setFase();
-            }
-        }
+        this.switchQueVerificaCondicaoDoJogo(resultadoPalpite);
     }
 
     public void setFase() {
@@ -56,9 +50,21 @@ public class JogoController {
         this.telaJogo.setDisplayText(this.jogoForca.getPalavraAtual().getDisplay());
         this.telaJogo.setTema(this.jogoForca.getPalavraAtual().getTema());
         this.telaJogo.setErros(this.jogoForca.getErros());
+        setFase();
 
         Set<Character> letras = this.jogoForca.getLetras();
 
         this.telaJogo.setLetrasUsadas(letras);
+    }
+
+    private void switchQueVerificaCondicaoDoJogo(ResultadoPalpite resultadoPalpite) {
+        switch (resultadoPalpite) {
+            case VENCEU_O_JOGO -> {this.telaJogo.venceuOuPerdeuMenu("GANHOU", this.jogoForca.getPalavraAtual().getPalavra());}
+            case VENCEU_A_RODADA -> {jogoForca.proximaRodada(); atualizarDadosJogo();}
+            case PERDEU -> {perdeuDerrota();}
+            default -> {
+                atualizarDadosJogo(); setFase();
+            }
+        }
     }
 }

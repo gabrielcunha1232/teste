@@ -110,7 +110,7 @@ public class TelaJogo extends JPanel {
     }
 
     public void setFaseDisplay(int fase) {
-        this.fase.setText(String.valueOf(fase));
+        this.fase.setText("FASE: " + fase);
     }
 
     public void setLetrasUsadas(Set<Character> letrasUsadas) {

@@ -6,5 +6,6 @@ public enum ResultadoPalpite {
     LETRA_JA_USADA,
     VENCEU_A_RODADA,
     VENCEU_O_JOGO,
-    PERDEU
+    PERDEU,
+    DUPLICATA_DE_AJUDA,
 }
